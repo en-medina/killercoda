@@ -12,12 +12,11 @@ FAILED=0
 
 check_pass() {
     echo -e "${GREEN}✓${NC} $1"
-    ((SUCCESS++))
 }
 
 check_fail() {
     echo -e "${RED}✗${NC} $1"
-    ((FAILED++))
+    exit 1
 }
 
 check_warning() {
@@ -37,7 +36,6 @@ if [ -f "Dockerfile.optimized" ]; then
     check_pass "Dockerfile.optimized existe"
 else
     check_fail "Dockerfile.optimized no existe"
-    exit 1
 fi
 
 if [ -f ".dockerignore" ]; then
@@ -60,7 +58,7 @@ else
     check_fail "Stage 1 (builder) no encontrado o incorrecto"
 fi
 
-if grep -q "FROM python:3.11-slim" Dockerfile.optimized | grep -v "AS builder" > /dev/null 2>&1; then
+if echo "$(grep "FROM python:3.11-slim" Dockerfile.optimized)" | grep -qv "AS builder" > /dev/null 2>&1; then
     check_pass "Stage 2 (runtime) configurado"
 else
     check_fail "Stage 2 (runtime) no encontrado"
@@ -194,28 +192,4 @@ else
 fi
 
 echo ""
-
-# ============================================
-# Resumen
-# ============================================
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "📊 Resumen de Verificación"
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo -e "${GREEN}✓ Exitosos:${NC} $SUCCESS"
-echo -e "${RED}✗ Fallidos:${NC} $FAILED"
-echo ""
-
-if [ $FAILED -eq 0 ]; then
-    echo -e "${GREEN}🎉 ¡Verificación completada exitosamente!${NC}"
-    echo ""
-    echo "✅ Mejoras logradas:"
-    echo "   • Multi-stage build implementado"
-    echo "   • Imagen optimizada (~82% más pequeña)"
-    echo "   • Usuario no-root (más seguro)"
-    echo "   • Cache optimizado (rebuilds rápidos)"
-    echo "   • Health check incluido"
-    exit 0
-else
-    echo -e "${RED}❌ Verificación fallida. Revisa los errores arriba.${NC}"
-    exit 1
-fi
+echo "✅ Verificación completa. ¡Buen trabajo!"
