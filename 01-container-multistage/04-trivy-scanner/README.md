@@ -34,5 +34,5 @@ trivy image --format json --output /opt/backend-scan.json link-backend:optimized
 trivy image --format json --output /opt/frontend-scan.json link-frontend:optimized
 
 # Ver resumen
-cat backend-scan.json | jq '.Results[].Vulnerabilities | length'
+cat /opt/backend-scan.json | jq '.Results[].Vulnerabilities | length'
 ```{{copy}}

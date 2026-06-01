@@ -7,6 +7,9 @@
       "foreground": "00-init/foreground.sh",
       "background": "00-init/background.sh"
     },
+    "finish": {
+      "text": "FINISH.md"
+    },
     "steps": [
       {
         "title": "Parte 1: Construir Backend (Flask) - Enfoque Básico",

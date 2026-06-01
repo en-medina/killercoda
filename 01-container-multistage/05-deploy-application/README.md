@@ -1,6 +1,7 @@
 ## 🧪 Parte 5: Probar las Imágenes
 
-### Paso 5.1: Probar Backend
+### Paso 5.1: Despliega el backend
+Despliega Redis y el backend: 
 
 ```bash
 # Crear red para despliegue
@@ -21,14 +22,11 @@ docker run -d --name backend-test \
 
 # Verificar logs
 docker logs backend-test
-
-# Probar endpoint
-curl http://localhost:5000/health
-
-# Debería devolver: {"status": "healthy", "redis": "connected"}
 ```{{copy}}
 
-### Paso 5.2: Probar Frontend
+Dale un tiempo y luego prueba que el backend este respondiendo con `curl http://localhost:5000/health`
+
+### Paso 5.2: Despliega el frontend
 
 ```bash
 # Iniciar frontend
@@ -41,9 +39,8 @@ docker logs frontend-test
 # http://localhost:8080
 ```{{copy}}
 
-### Paso 5.3: Limpiar Contenedores
+### Paso 5.3: Accede al escenario
 
-```bash
-docker stop backend-test frontend-test redis-test
-docker rm backend-test frontend-test redis-test
-```{{copy}}
+Para acceder al escenario, debes acceder desde la opcion de Network Traffic de killercoda. 
+
+De igual manera, puedes acceder dandole [click aqui]({{TRAFFIC_HOST1_8080}}) .
