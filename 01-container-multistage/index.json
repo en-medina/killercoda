@@ -1,0 +1,26 @@
+{
+  "title": "Lab 1: Docker Fundamentals - Building Production-Ready Containers",
+  "description": "Construir imágenes Docker optimizadas con multi-stage builds para producción",
+  "details": {
+    "intro": {
+      "text": "README.md",
+      "background": "init/background.sh",
+      "foreground": "init/foreground.sh"
+    },
+    "steps": [
+      {
+        "title": "Attach volume to the container",
+        "text": "01-step/README.md",
+        "verify": "01-step/verify.sh"
+      }
+    ],
+    "assets": {
+      "host01": [
+        {"file": "repo/apps/**/*.*", "target": "/apps"}
+      ]
+    }
+  },
+  "backend": {
+    "imageid": "ubuntu"
+  }
+}
