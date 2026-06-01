@@ -3,7 +3,9 @@
   "description": "Construir imágenes Docker optimizadas con multi-stage builds para producción",
   "details": {
     "intro": {
-      "text": "README.md"
+      "text": "README.md",
+      "background": "init/background.sh",
+      "foreground": "init/foreground.sh"
     },
     "steps": [
       {
@@ -14,7 +16,7 @@
     ],
     "assets": {
       "host01": [
-        {"file": "repo/apps/**/*.*", "target": "/apps"}
+        {"file": "apps/**/*.*", "target": "/apps"}
       ]
     }
   },
