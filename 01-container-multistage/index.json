@@ -3,9 +3,7 @@
   "description": "Construir imágenes Docker optimizadas con multi-stage builds para producción",
   "details": {
     "intro": {
-      "text": "README.md",
-      "background": "init/background.sh",
-      "foreground": "init/foreground.sh"
+      "text": "README.md"
     },
     "steps": [
       {
