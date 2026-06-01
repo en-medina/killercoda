@@ -1,5 +1,5 @@
 {
-  "title": "Lab 1: Docker Fundamentals - Building Production-Ready Containers",
+  "title": "Laboratorio 1: Fundamentos de Docker: Construcción de Contenedores Listos para Producción",
   "description": "Construir imágenes Docker optimizadas con multi-stage builds para producción",
   "details": {
     "intro": {
@@ -7,14 +7,14 @@
     },
     "steps": [
       {
-        "title": "Attach volume to the container",
+        "title": "Parte 1: Construir Backend (Flask) - Enfoque Básico",
         "text": "01-step/README.md",
         "verify": "01-step/verify.sh"
       }
     ],
     "assets": {
       "host01": [
-        {"file": "apps/**/*.*", "target": "/apps"}
+        {"file": "apps/**/*.*", "target": "~/code"}
       ]
     }
   },

@@ -1,4 +1,4 @@
-# Lab 1: Docker Fundamentals - Building Production-Ready Containers
+# Laboratorio 1: Fundamentos de Docker: Construcción de Contenedores Listos para Producción
 
 ## 🎯 Objetivos de Aprendizaje
 
