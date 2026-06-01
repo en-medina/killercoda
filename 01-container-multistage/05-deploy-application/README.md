@@ -3,13 +3,19 @@
 ### Paso 5.1: Probar Backend
 
 ```bash
+# Crear red para despliegue
+docker network create test-network
+
 # Iniciar Redis (dependencia del backend)
-docker run -d --name redis-test -p 6379:6379 redis:7-alpine
+docker run -d --name redis-test \
+    --network test-network \
+    -p 6379:6379 redis:7-alpine
 
 # Iniciar backend
 docker run -d --name backend-test \
+    --network test-network \
     -p 5000:5000 \
-    -e REDIS_HOST=host.docker.internal \
+    -e REDIS_HOST=redis-test \
     -e REDIS_PORT=6379 \
     link-backend:optimized
 
@@ -20,7 +26,7 @@ docker logs backend-test
 curl http://localhost:5000/health
 
 # Debería devolver: {"status": "healthy", "redis": "connected"}
-```
+```{{copy}}
 
 ### Paso 5.2: Probar Frontend
 
@@ -33,11 +39,11 @@ docker logs frontend-test
 
 # Abrir en navegador
 # http://localhost:8080
-```
+```{{copy}}
 
 ### Paso 5.3: Limpiar Contenedores
 
 ```bash
 docker stop backend-test frontend-test redis-test
 docker rm backend-test frontend-test redis-test
-```
+```{{copy}}

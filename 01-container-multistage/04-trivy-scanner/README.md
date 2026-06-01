@@ -8,7 +8,7 @@ trivy image link-backend:optimized
 
 # Ver solo vulnerabilidades HIGH y CRITICAL
 trivy image --severity HIGH,CRITICAL link-backend:optimized
-```
+```{{copy}}
 
 **Interpretación:**
 - **LOW:** Informativas, baja prioridad
@@ -20,7 +20,7 @@ trivy image --severity HIGH,CRITICAL link-backend:optimized
 
 ```bash
 trivy image link-frontend:optimized
-```
+```{{copy}}
 
 **Nota:** Alpine suele tener menos vulnerabilidades que imágenes Debian/Ubuntu.
 
@@ -35,4 +35,4 @@ trivy image --format json --output /opt/frontend-scan.json link-frontend:optimiz
 
 # Ver resumen
 cat backend-scan.json | jq '.Results[].Vulnerabilities | length'
-```
+```{{copy}}

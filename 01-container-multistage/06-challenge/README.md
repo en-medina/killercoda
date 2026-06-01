@@ -7,12 +7,12 @@ Modifica el Dockerfile del backend para configurar la versión de Python en buil
 ```dockerfile
 ARG PYTHON_VERSION=3.11
 FROM python:${PYTHON_VERSION}-slim AS builder
-```
+```{{copy}}
 
 Construir con:
 ```bash
 docker build --build-arg PYTHON_VERSION=3.12 -t link-backend:py312 .
-```
+```{{copy}}
 
 ### Desafío 2: Implementar Distroless
 

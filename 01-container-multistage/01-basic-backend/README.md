@@ -3,10 +3,10 @@
 ### Paso 1.1: Examinar el Código del Backend
 
 ```bash
-cd ./code/apps/backend
+cd ~/code/apps/backend
 ls -la
 # Verás: app/ requirements.txt
-```
+```{{exec}}
 
 ### Paso 1.2: Crear Dockerfile Básico (Sin Optimizar)
 
@@ -27,7 +27,7 @@ EXPOSE 5000
 
 # Comando de inicio
 CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:create_app()"]
-```
+```{{copy}}
 
 ### Paso 1.3: Construir y Verificar Tamaño
 

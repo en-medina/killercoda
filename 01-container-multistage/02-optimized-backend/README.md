@@ -50,11 +50,11 @@ EXPOSE 5000
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD python -c "import requests; requests.get('http://localhost:5000/health')"
+  CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:5000/health').read()"
 
 # Comando de inicio
 CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "2", "app:create_app()"]
-```
+```{{copy}}
 
 ### Paso 2.2: Crear .dockerignore
 
@@ -80,7 +80,7 @@ ENV/
 README.md
 *.md
 .DS_Store
-```
+```{{copy}}
 
 ### Paso 2.3: Construir y Comparar
 
@@ -94,7 +94,7 @@ docker images | grep link-backend
 # Resultado esperado:
 # link-backend:basic      ~1000 MB
 # link-backend:optimized  ~180 MB
-```
+```{{copy}}
 
 **✅ Mejoras logradas:**
 - Reducción de tamaño: ~82%

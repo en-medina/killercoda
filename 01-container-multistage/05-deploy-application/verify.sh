@@ -63,10 +63,10 @@ if docker ps --format "{{.Names}}" | grep -q "redis-test"; then
     if docker ps --filter "name=redis-test" --format "{{.Ports}}" | grep -q "6379"; then
         check_pass "Redis puerto 6379 expuesto"
     else
-        check_warning "Puerto 6379 de Redis no expuesto correctamente"
+        check_fail "Puerto 6379 de Redis no expuesto correctamente"
     fi
 else
-    check_warning "Contenedor redis-test no está en ejecución"
+    check_fail "Contenedor redis-test no está en ejecución"
     echo "   Inicia con: docker run -d --name redis-test -p 6379:6379 redis:7-alpine"
 fi
 
@@ -78,7 +78,7 @@ if docker ps --format "{{.Names}}" | grep -q "backend-test"; then
     if docker ps --filter "name=backend-test" --format "{{.Ports}}" | grep -q "5000"; then
         check_pass "Backend puerto 5000 expuesto"
     else
-        check_warning "Puerto 5000 de Backend no expuesto correctamente"
+        check_fail "Puerto 5000 de Backend no expuesto correctamente"
     fi
 
     # Verificar variables de entorno
@@ -88,17 +88,17 @@ if docker ps --format "{{.Names}}" | grep -q "backend-test"; then
     if [ -n "$REDIS_HOST" ]; then
         check_pass "Variable REDIS_HOST configurada: $REDIS_HOST"
     else
-        check_warning "Variable REDIS_HOST no configurada"
+        check_fail "Variable REDIS_HOST no configurada"
     fi
 
     if [ "$REDIS_PORT" = "6379" ]; then
         check_pass "Variable REDIS_PORT configurada: $REDIS_PORT"
     else
-        check_warning "Variable REDIS_PORT no configurada o incorrecta"
+        check_fail "Variable REDIS_PORT no configurada o incorrecta"
     fi
 
 else
-    check_warning "Contenedor backend-test no está en ejecución"
+    check_fail "Contenedor backend-test no está en ejecución"
     echo "   Inicia con: docker run -d --name backend-test -p 5000:5000 -e REDIS_HOST=host.docker.internal -e REDIS_PORT=6379 link-backend:optimized"
 fi
 
@@ -110,10 +110,10 @@ if docker ps --format "{{.Names}}" | grep -q "frontend-test"; then
     if docker ps --filter "name=frontend-test" --format "{{.Ports}}" | grep -q "8080"; then
         check_pass "Frontend puerto 8080 expuesto"
     else
-        check_warning "Puerto 8080 de Frontend no expuesto correctamente"
+        check_fail "Puerto 8080 de Frontend no expuesto correctamente"
     fi
 else
-    check_warning "Contenedor frontend-test no está en ejecución"
+    check_fail "Contenedor frontend-test no está en ejecución"
     echo "   Inicia con: docker run -d --name frontend-test -p 8080:80 link-frontend:optimized"
 fi
 
@@ -128,9 +128,6 @@ echo "🏥 Verificando endpoints de salud..."
 if docker ps --format "{{.Names}}" | grep -q "backend-test"; then
     echo ""
     echo "📡 Probando Backend (http://localhost:5000/health)..."
-
-    # Esperar un momento para que el servicio esté listo
-    sleep 2
 
     if curl -s -f http://localhost:5000/health > /tmp/backend-health.json 2>&1; then
         check_pass "Endpoint /health del backend responde"
@@ -159,7 +156,7 @@ if docker ps --format "{{.Names}}" | grep -q "backend-test"; then
             cat /tmp/backend-health.json
         fi
     else
-        check_warning "Endpoint /health del backend no responde"
+        check_fail "Endpoint /health del backend no responde"
         echo "   Verifica logs: docker logs backend-test"
     fi
 fi
@@ -176,7 +173,7 @@ if docker ps --format "{{.Names}}" | grep -q "frontend-test"; then
             check_pass "Frontend status: healthy"
         fi
     else
-        check_warning "Endpoint /health del frontend no responde"
+        check_fail "Endpoint /health del frontend no responde"
         echo "   Verifica logs: docker logs frontend-test"
     fi
 

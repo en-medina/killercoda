@@ -3,8 +3,8 @@
 ### Paso 3.1: Ir al Directorio Frontend
 
 ```bash
-cd ./code/apps/frontend
-```
+cd ~/code/apps/frontend
+```{{exec}}
 
 ### Paso 3.2: Crear Dockerfile Multi-Stage
 
@@ -60,9 +60,11 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 
 # Nginx se ejecuta en foreground por defecto
 CMD ["nginx", "-g", "daemon off;"]
-```
+```{{copy}}
 
 ### Paso 3.3: Crear .dockerignore
+
+Crea `.dockerignore` para excluir archivos innecesarios:
 
 ```
 node_modules/
@@ -79,7 +81,7 @@ yarn-error.log*
 README.md
 *.md
 .DS_Store
-```
+```{{copy}}
 
 ### Paso 3.4: Construir y Verificar
 

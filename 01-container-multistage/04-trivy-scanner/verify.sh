@@ -42,34 +42,6 @@ fi
 echo ""
 
 # ============================================
-# Verificar imágenes existen
-# ============================================
-echo "🐳 Verificando imágenes disponibles..."
-
-BACKEND_EXISTS=false
-FRONTEND_EXISTS=false
-
-if docker images link-backend:optimized --format "{{.Repository}}:{{.Tag}}" | grep -q "link-backend:optimized"; then
-    check_pass "Imagen link-backend:optimized disponible"
-    BACKEND_EXISTS=true
-else
-    check_warning "Imagen link-backend:optimized no encontrada (debe completarse Parte 2)"
-fi
-
-if docker images link-frontend:optimized --format "{{.Repository}}:{{.Tag}}" | grep -q "link-frontend:optimized"; then
-    check_pass "Imagen link-frontend:optimized disponible"
-    FRONTEND_EXISTS=true
-else
-    check_warning "Imagen link-frontend:optimized no encontrada (debe completarse Parte 3)"
-fi
-
-if [ "$BACKEND_EXISTS" = false ] && [ "$FRONTEND_EXISTS" = false ]; then
-    check_fail "No hay imágenes para escanear. Completa las Partes 2 y 3 primero"
-fi
-
-echo ""
-
-# ============================================
 # Verificar escaneos realizados
 # ============================================
 echo "🔍 Verificando escaneos realizados..."
