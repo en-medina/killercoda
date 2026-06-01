@@ -3,7 +3,9 @@
   "description": "Construir imágenes Docker optimizadas con multi-stage builds para producción",
   "details": {
     "intro": {
-      "text": "README.md"
+      "text": "README.md",
+      "foreground": "00-init/foreground.sh",
+      "background": "00-init/background.sh"
     },
     "steps": [
       {
@@ -12,9 +14,28 @@
         "verify": "01-basic-backend/verify.sh"
       },
       {
-        "title": "Parte 1: Construir Backend (Flask) - Enfoque Optimizado",
+        "title": "Parte 2: Construir Backend (Flask) - Enfoque Optimizado",
         "text": "02-optimized-backend/README.md",
         "verify": "02-optimized-backend/verify.sh"
+      },
+      {
+        "title": "Parte 3: Construir Frontend (React) - Enfoque Optimizado",
+        "text": "03-optimized-frontend/README.md",
+        "verify": "03-optimized-frontend/verify.sh"
+      },
+      {
+        "title": "Parte 4: Escanear Imágenes con Trivy",
+        "text": "04-trivy-scanner/README.md",
+        "verify": "04-trivy-scanner/verify.sh"
+      },
+      {
+        "title": "Parte 5: Desplegar todas las Imagenes",
+        "text": "05-deploy-application/README.md",
+        "verify": "05-deploy-application/verify.sh"
+      },
+      {
+        "title": "Parte 6: Reto Final - Optimizar applicaciones (Opcional)",
+        "text": "06-challenge/README.md"
       }
     ],
     "assets": {
