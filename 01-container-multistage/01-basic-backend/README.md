@@ -3,9 +3,9 @@
 ### Paso 1.1: Examinar el Código del Backend
 
 ```bash
-cd ./repo/apps/backend
+cd ./code/apps/backend
 ls -la
-# Verás: app/ requirements.txt Dockerfile
+# Verás: app/ requirements.txt
 ```
 
 ### Paso 1.2: Crear Dockerfile Básico (Sin Optimizar)

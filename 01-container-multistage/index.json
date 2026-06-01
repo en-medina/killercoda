@@ -1,5 +1,5 @@
 {
-  "title": "Laboratorio 1: Fundamentos de Docker: Construcción de Contenedores Listos para Producción",
+  "title": "Laboratorio 1: Fundamentos de Docker",
   "description": "Construir imágenes Docker optimizadas con multi-stage builds para producción",
   "details": {
     "intro": {
@@ -8,8 +8,13 @@
     "steps": [
       {
         "title": "Parte 1: Construir Backend (Flask) - Enfoque Básico",
-        "text": "01-step/README.md",
-        "verify": "01-step/verify.sh"
+        "text": "01-basic-backend/README.md",
+        "verify": "01-basic-backend/verify.sh"
+      },
+      {
+        "title": "Parte 1: Construir Backend (Flask) - Enfoque Optimizado",
+        "text": "02-optimized-backend/README.md",
+        "verify": "02-optimized-backend/verify.sh"
       }
     ],
     "assets": {
