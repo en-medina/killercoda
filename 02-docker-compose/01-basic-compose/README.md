@@ -50,7 +50,7 @@ services:
 
   frontend:
     build:
-      context: ./code/apps/frontend
+      context: ./apps/frontend
       dockerfile: Dockerfile
     ports:
       - "8080:80"

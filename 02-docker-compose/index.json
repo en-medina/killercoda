@@ -3,7 +3,9 @@
   "description": "Orquestar aplicaciones multi-contenedor con Docker Compose para producción",
   "details": {
     "intro": {
-      "text": "README.md"    
+      "text": "README.md",
+      "foreground": "00-init/foreground.sh",
+      "background": "00-init/background.sh"
     },
     "finish": {
       "text": "FINISH.md"
@@ -46,9 +48,7 @@
     ],
     "assets": {
       "host01": [
-        {"file": "apps/**/*.*", "target": "~/code"},
-        {"file": "configs/**/*.*", "target": "~/code/configs"},
-        {"file": "scripts/**/*.*", "target": "~/code/scripts"}
+        {"file": "apps/**/*.*", "target": "~/code"}
       ]
     }
   },
