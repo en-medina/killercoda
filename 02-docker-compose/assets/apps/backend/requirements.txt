@@ -1,0 +1,4 @@
+Flask==3.0.3
+flask-cors==4.0.1
+redis==5.0.4
+gunicorn==22.0.0

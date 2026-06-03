@@ -1,0 +1,58 @@
+{
+  "title": "Laboratorio 2: Docker Compose",
+  "description": "Orquestar aplicaciones multi-contenedor con Docker Compose para producción",
+  "details": {
+    "intro": {
+      "text": "README.md"    
+    },
+    "finish": {
+      "text": "FINISH.md"
+    },
+    "steps": [
+      {
+        "title": "Parte 1: Compose Básico",
+        "text": "01-basic-compose/README.md",
+        "verify": "01-basic-compose/verify.sh"
+      },
+      {
+        "title": "Parte 2: Redes Personalizadas",
+        "text": "02-networks/README.md",
+        "verify": "02-networks/verify.sh"
+      },
+      {
+        "title": "Parte 3: Volúmenes Persistentes",
+        "text": "03-volumes/README.md",
+        "verify": "03-volumes/verify.sh"
+      },
+      {
+        "title": "Parte 4: Health Checks y Production-Ready",
+        "text": "04-health-checks/README.md",
+        "verify": "04-health-checks/verify.sh"
+      },
+      {
+        "title": "Parte 5: Simulación de Fallos",
+        "text": "05-failure-scenarios/README.md",
+        "verify": "05-failure-scenarios/verify.sh"
+      },
+      {
+        "title": "Parte 6: Tests de Integración",
+        "text": "06-integration-tests/README.md",
+        "verify": "06-integration-tests/verify.sh"
+      },
+      {
+        "title": "Parte 7: Reto Final - Múltiples Entornos (Opcional)",
+        "text": "07-challenge/README.md"
+      }
+    ],
+    "assets": {
+      "host01": [
+        {"file": "apps/**/*.*", "target": "~/code"},
+        {"file": "configs/**/*.*", "target": "~/code/configs"},
+        {"file": "scripts/**/*.*", "target": "~/code/scripts"}
+      ]
+    }
+  },
+  "backend": {
+    "imageid": "ubuntu"
+  }
+}
