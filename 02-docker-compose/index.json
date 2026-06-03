@@ -48,7 +48,7 @@
     ],
     "assets": {
       "host01": [
-        {"file": "apps/**/*.*", "target": "~/code"}
+        {"file": "apps/**/*", "target": "~/code"}
       ]
     }
   },
