@@ -10,7 +10,7 @@ Los health checks permiten:
 
 ### Paso 4.2: Crear Compose Production-Ready
 
-Crea `docker-compose.complete.yml`:
+En el directorio `~/code`. Crea `docker-compose.complete.yml`:
 
 ```yaml
 services:
@@ -113,9 +113,8 @@ volumes:
 ### Paso 4.3: Levantar Stack Production-Ready
 
 ```bash
-cd ~/code
 docker-compose -f docker-compose.complete.yml up --build -d
-```{{exec}}
+```
 
 ### Paso 4.4: Monitorear Health Status
 
@@ -124,11 +123,10 @@ docker-compose -f docker-compose.complete.yml up --build -d
 docker-compose -f docker-compose.complete.yml ps
 
 # Esperar unos segundos para ver los health checks
-sleep 15
 
 # Ver de nuevo (los estados deberían ser "healthy")
 docker-compose -f docker-compose.complete.yml ps
-```{{exec}}
+```
 
 ### Paso 4.5: Inspeccionar Health Checks
 

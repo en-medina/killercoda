@@ -65,9 +65,6 @@ services:
 ```bash
 # Construir imágenes y levantar servicios
 docker-compose -f docker-compose.starter.yml up --build -d
-
-# Verificar estado de servicios
-docker-compose -f docker-compose.starter.yml ps
 ```{{copy}}
 
 ### Paso 1.4: Probar la Aplicación
@@ -79,13 +76,27 @@ Esperar unos segundos para que los servicios inicien y luego chequea su estado:
 curl http://localhost:5000/health
 
 # Probar creación de URL corta
-curl -X POST http://localhost:5000/shorten \
+RESPONSE=$(curl -s -X POST http://localhost:5000/shorten \
   -H "Content-Type: application/json" \
-  -d '{"url": "https://kubernetes.io"}'
+  -d '{"url": "https://github.com"}')
+
+echo $RESPONSE
+
+# Extraer short_code
+SHORT_CODE=$(echo $RESPONSE | jq -r '.short_code')
+echo "Short code: $SHORT_CODE"
+
+# Chequea si la URL devuelve la original
+curl -sI http://localhost:5000/$SHORT_CODE | grep Location
 
 # Chequea el estado de cada contenedor
 docker ps 
-```{{copy}}
+
+# Puedes chequearlo usando docker-compose referenciando el archivo de despliege
+docker-compose -f docker-compose.starter.yml ps
+```
+
+Tambien revisa el portal web dando [click aqui]({{TRAFFIC_HOST1_8080}})
 
 ### Paso 1.5: Ver Logs
 
@@ -94,8 +105,21 @@ docker ps
 docker-compose -f docker-compose.starter.yml logs --tail=20
 
 # Ver logs solo del backend
-docker-compose -f docker-compose.starter.yml logs backend --tail=10
-```{{copy}}
+docker logs code_backend_1 --tail=10
+```
+
+### Paso 1.6: Simular Reinicio 
+
+```bash
+# Apaga el ambiente
+docker-compose -f docker-compose.starter.yml down
+
+# Levanta el ambiente de nuevo
+docker-compose -f docker-compose.starter.yml up --build -d
+
+# Intenta acceder nuevamente a la URL corta
+curl -sI http://localhost:5000/$SHORT_CODE | grep Location
+```
 
 ## ❌ Problemas de este Enfoque Básico
 

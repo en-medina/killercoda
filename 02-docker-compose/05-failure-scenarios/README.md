@@ -7,7 +7,6 @@ Si la stack no está corriendo desde el paso anterior:
 ```bash
 cd ~/code
 docker-compose -f docker-compose.complete.yml up -d
-sleep 10
 ```{{exec}}
 
 ### Escenario 1: Redis Muere
@@ -50,7 +49,6 @@ docker-compose -f docker-compose.complete.yml start redis
 
 # Esperar a que el health check pase
 echo "Esperando health check..."
-sleep 15
 
 # Verificar estado
 docker-compose -f docker-compose.complete.yml ps
@@ -61,7 +59,7 @@ echo "Reintentando request..."
 curl -X POST http://localhost:5000/shorten \
   -H "Content-Type: application/json" \
   -d '{"url": "https://github.com"}' && echo "✅ Servicio recuperado!"
-```{{exec}}
+```
 
 ### Escenario 2: Backend Crashea
 
@@ -73,13 +71,12 @@ echo "🔴 Simulando crash del backend..."
 docker-compose -f docker-compose.complete.yml exec -T backend sh -c "kill 1" || true
 
 # Esperar un momento
-sleep 3
 
 # Verificar que Docker lo reinició automáticamente (restart: unless-stopped)
 echo ""
 echo "Verificando auto-restart..."
 docker-compose -f docker-compose.complete.yml ps
-```{{exec}}
+```
 
 #### Paso 5.6: Verificar Logs de Restart
 
@@ -92,11 +89,10 @@ docker-compose -f docker-compose.complete.yml logs --tail=30 backend | grep -E "
 
 ```bash
 # Esperar a que el health check pase
-sleep 10
 
 # Probar endpoint
 curl -f http://localhost:5000/health && echo "✅ Backend operacional después del restart"
-```{{exec}}
+```
 
 ### Escenario 3: Limitar Recursos (Stress Test)
 
@@ -111,7 +107,7 @@ docker inspect link-backend --format='CPU Limit: {{.HostConfig.NanoCpus}} nanocp
 echo ""
 echo "Uso actual:"
 docker stats --no-stream link-backend
-```{{exec}}
+```
 
 #### Paso 5.9: Ver Estado de Health Checks Durante el Estrés
 
@@ -150,8 +146,8 @@ docker-compose -f docker-compose.complete.yml up -d
 echo ""
 echo "Monitoreando inicio secuencial..."
 for i in {1..10}; do
-  sleep 3
   docker-compose -f docker-compose.complete.yml ps
+  sleep 3
   echo "---"
 done
 ```{{exec}}

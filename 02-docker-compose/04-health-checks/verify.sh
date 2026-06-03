@@ -36,6 +36,12 @@ if ! grep -q "condition: service_healthy" ~/code/docker-compose.complete.yml; th
     exit 1
 fi
 
+# Check if docker-compose services are running
+if ! docker-compose -f ~/code/docker-compose.complete.yml ps | grep -q "Up"; then
+    echo "❌ docker-compose services are not running. Start them with: docker-compose -f ~/code/docker-compose.complete.yml up"
+    exit 1
+fi
+
 echo "✅ Step 4 verification passed!"
 echo "   - docker-compose.complete.yml created with health checks"
 echo "   - Restart policies configured"

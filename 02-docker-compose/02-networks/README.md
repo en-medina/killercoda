@@ -10,7 +10,7 @@ En producción, queremos aislar servicios por capas:
 
 ### Paso 2.2: Crear Compose con Redes
 
-Crea `docker-compose.networks.yml`:
+Dentro del directorio ~/code. Crea `docker-compose.networks.yml`:
 
 ```yaml
 services:
@@ -58,7 +58,6 @@ networks:
 ### Paso 2.3: Levantar Stack con Redes
 
 ```bash
-cd ~/code
 docker-compose -f docker-compose.networks.yml up --build -d
 ```{{exec}}
 
@@ -70,17 +69,24 @@ docker network ls | grep code
 
 # Inspeccionar la red backend
 docker network inspect code_backend-network
-```{{exec}}
+
+# Revisa los containers que estan conectados a estas redes
+docker network inspect code_backend-network | jq '.[].Containers'
+
+# Guarda la salida de este comando en /opt/networks.json
+```
 
 ### Paso 2.5: Probar Aislamiento de Red
 
 ```bash
-# Intentar conectar desde frontend a redis (debe fallar)
-docker-compose -f docker-compose.networks.yml exec frontend ping -c 2 redis || echo "✅ Correctamente aislado: frontend no puede alcanzar redis"
+# Intentar verificar desde frontend la IP redis (no devolvera nada)
+docker-compose -f docker-compose.networks.yml exec frontend getent hosts redis 
 
-# Intentar conectar desde backend a redis (debe funcionar)
-docker-compose -f docker-compose.networks.yml exec backend ping -c 2 redis && echo "✅ Backend puede alcanzar redis"
+# Intentar verificar desde backend  la IP redis (si la conoce)
+docker-compose -f docker-compose.networks.yml exec backend getent hosts redis
 ```{{exec}}
+
+**Nota**: La IP de redis que conoce el backend coincide con la IP asignada a redis en la red **code_backend-network**.
 
 ### Paso 2.6: Verificar que la Aplicación Funciona
 
@@ -96,9 +102,11 @@ echo $RESPONSE
 SHORT_CODE=$(echo $RESPONSE | jq -r '.short_code')
 echo "Short code: $SHORT_CODE"
 
-# Verificar redirección
-curl -I http://localhost:5000/$SHORT_CODE
-```{{exec}}
+# Verificar redirección en el Header `Location`
+# te debe redirigir a la URL original
+curl -sI http://localhost:5000/$SHORT_CODE | grep Location
+
+```
 
 ## ✅ Logros
 

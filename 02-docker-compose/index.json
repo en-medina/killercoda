@@ -1,5 +1,5 @@
 {
-  "title": "Laboratorio 2: Docker Compose",
+  "title": "Laboratorio 2: Docker Compose: Orquestación de Aplicaciones Multi-Contenedor",
   "description": "Orquestar aplicaciones multi-contenedor con Docker Compose para producción",
   "details": {
     "intro": {

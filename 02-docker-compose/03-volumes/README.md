@@ -96,10 +96,7 @@ volumes:
 ```bash
 cd ~/code
 docker-compose -f docker-compose.volumes.yml up --build -d
-
-# Esperar a que los servicios estén listos
-sleep 10
-```{{exec}}
+```
 
 ### Paso 3.5: Probar Persistencia de Datos
 
@@ -107,7 +104,7 @@ sleep 10
 # Crear una URL corta
 RESPONSE=$(curl -s -X POST http://localhost:5000/shorten \
   -H "Content-Type: application/json" \
-  -d '{"url": "https://kubernetes.io"}')
+  -d '{"url": "https://istio.io/"}')
 
 echo "Respuesta: $RESPONSE"
 
@@ -116,8 +113,8 @@ SHORT_CODE=$(echo $RESPONSE | jq -r '.short_code')
 echo "Short code creado: $SHORT_CODE"
 
 # Verificar que funciona
-curl -I http://localhost:5000/$SHORT_CODE | head -n 5
-```{{exec}}
+curl -sI http://localhost:5000/$SHORT_CODE | grep Location
+```
 
 ### Paso 3.6: Simular Reinicio (Sin Perder Datos)
 
@@ -132,8 +129,7 @@ docker volume ls | grep redis-data
 docker-compose -f docker-compose.volumes.yml up -d
 
 # Esperar a que Redis inicie
-sleep 10
-```{{exec}}
+```
 
 ### Paso 3.7: Verificar que los Datos Persisten
 
@@ -146,7 +142,7 @@ curl -I http://localhost:5000/$SHORT_CODE | head -n 5
 
 echo ""
 echo "✅ Los datos persistieron después del reinicio!"
-```{{exec}}
+```
 
 ### Paso 3.8: Inspeccionar el Volumen
 
@@ -156,7 +152,7 @@ docker volume inspect code_redis-data
 
 # Ver cuánto espacio usa
 docker system df -v | grep redis-data
-```{{exec}}
+```
 
 ## ✅ Logros
 
