@@ -11,7 +11,7 @@ FROM python:${PYTHON_VERSION}-slim AS builder
 
 Construir con:
 ```bash
-docker build --build-arg PYTHON_VERSION=3.12 -t link-backend:py312 .
+docker build --build-arg PYTHON_VERSION=3.12 -t link-backend:py312 -f Dockerfile.optimized .
 ```{{copy}}
 
 ### Desafío 2: Implementar Distroless

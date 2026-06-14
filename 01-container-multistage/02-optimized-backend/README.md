@@ -94,7 +94,7 @@ docker images | grep link-backend
 # Resultado esperado:
 # link-backend:basic      ~1000 MB
 # link-backend:optimized  ~180 MB
-```{{copy}}
+```
 
 **✅ Mejoras logradas:**
 - Reducción de tamaño: ~82%

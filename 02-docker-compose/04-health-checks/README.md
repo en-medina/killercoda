@@ -51,7 +51,12 @@ services:
       redis:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      test: [
+        "CMD",
+        "python",
+        "-c",
+        "\"import urllib.request; urllib.request.urlopen('http://localhost:5000/health').read()\""
+      ]
       interval: 30s
       timeout: 3s
       retries: 3
@@ -81,7 +86,7 @@ services:
       backend:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost/"]
+      test: ["CMD", "curl", -sf", "http://localhost:80/health"]
       interval: 30s
       timeout: 3s
       retries: 3
@@ -134,8 +139,6 @@ docker-compose -f docker-compose.complete.yml ps
 # Inspeccionar health del backend
 docker inspect link-backend --format='{{json .State.Health}}' | jq
 
-# Ver últimos 3 health checks
-docker inspect link-backend --format='{{range .State.Health.Log}}{{.Output}}{{end}}'
 ```{{exec}}
 
 ### Paso 4.6: Monitorear Recursos
@@ -178,7 +181,7 @@ echo $RESPONSE
 SHORT_CODE=$(echo $RESPONSE | jq -r '.short_code')
 echo ""
 echo "Testing redirect for: $SHORT_CODE"
-curl -I http://localhost:5000/$SHORT_CODE | head -n 5
+curl -sI http://localhost:5000/$SHORT_CODE  | grep Location
 ```{{exec}}
 
 ## ✅ Logros

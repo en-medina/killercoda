@@ -54,11 +54,16 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:80"
-    environment:
-      - VITE_BACKEND_URL=http://localhost:5000
+    env_file:
+      - .env
 ```{{copy}}
 
 **Nota:** Los servicios se descubren por nombre DNS. El backend puede conectarse a Redis usando `redis` como hostname.
+
+Es necesario generar el archivo `.env` con la dirección del backend que utilizará el frontend.
+```
+"VITE_BACKEND_URL={{TRAFFIC_HOST1_5000}}" > ~/code/frontend/.env
+```{{copy}}
 
 ### Paso 1.3: Construir y Levantar la Stack
 

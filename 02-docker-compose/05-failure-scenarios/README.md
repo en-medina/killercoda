@@ -140,14 +140,13 @@ docker-compose -f docker-compose.complete.yml down
 # Levantar de nuevo (observa el orden gracias a depends_on)
 echo ""
 echo "🟢 Levantando stack con orden controlado..."
-docker-compose -f docker-compose.complete.yml up -d
-
+nohup docker-compose -f docker-compose.complete.yml up -d &
 # Monitorear el inicio secuencial
 echo ""
 echo "Monitoreando inicio secuencial..."
-for i in {1..10}; do
+for i in {1..14}; do
   docker-compose -f docker-compose.complete.yml ps
-  sleep 3
+  sleep 1
   echo "---"
 done
 ```{{exec}}
