@@ -69,8 +69,8 @@ services:
   frontend:
     ports:
       - "5173:5173"
-    environment:
-      - VITE_BACKEND_URL=http://localhost:5000
+    env_file:
+      - ./apps/frontend/.env
     volumes:
       - ./apps/frontend/src:/app/src  # Hot reload
 ```{{copy}}
@@ -120,8 +120,8 @@ services:
 
   frontend:
     restart: always
-    environment:
-      - VITE_BACKEND_URL=http://backend:5000
+    env_file:
+      - ./apps/frontend/.env
     depends_on:
       backend:
         condition: service_healthy
@@ -236,8 +236,8 @@ services:
       - frontend-network
     ports:
       - "${FRONTEND_PORT}:80"
-    environment:
-      - VITE_BACKEND_URL=http://localhost:${BACKEND_PORT}
+    env_file:
+      - ./apps/frontend/.env
     depends_on:
       - backend
     deploy:

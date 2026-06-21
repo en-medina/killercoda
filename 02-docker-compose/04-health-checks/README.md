@@ -80,8 +80,8 @@ services:
       - frontend-network
     ports:
       - "5173:80"
-    environment:
-      - VITE_BACKEND_URL=http://localhost:5000
+    env_file:
+      - ./apps/frontend/.env
     depends_on:
       backend:
         condition: service_healthy
