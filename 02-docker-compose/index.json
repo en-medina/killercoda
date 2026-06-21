@@ -37,13 +37,8 @@
         "verify": "05-failure-scenarios/verify.sh"
       },
       {
-        "title": "Parte 6: Tests de Integración",
-        "text": "06-integration-tests/README.md",
-        "verify": "06-integration-tests/verify.sh"
-      },
-      {
-        "title": "Parte 7: Reto Final - Múltiples Entornos (Opcional)",
-        "text": "07-challenge/README.md"
+        "title": "Parte 6: Reto Final - Múltiples Entornos (Opcional)",
+        "text": "06-challenge/README.md"
       }
     ],
     "assets": {

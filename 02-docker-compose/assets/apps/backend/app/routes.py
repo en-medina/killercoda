@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify, redirect, current_app
 from app.utils import generate_short_code, is_valid_url
+import os
 import uuid
 
 bp = Blueprint('main', __name__)
@@ -16,11 +17,12 @@ def health_check():
     """
     Health check endpoint.
     """
+    app_env = os.getenv('FLASK_ENV', 'not-set')
     try:
         current_app.redis_client.ping()
-        return jsonify({'status': 'healthy', 'redis': 'connected'}), 200
+        return jsonify({'status': 'healthy', 'redis': 'connected', 'environment': app_env}), 200
     except Exception as e:
-        return jsonify({'status': 'unhealthy', 'error': str(e)}), 503
+        return jsonify({'status': 'unhealthy', 'error': str(e), 'environment': app_env}), 503
 
 @bp.route('/shorten', methods=['POST'])
 def shorten_url():

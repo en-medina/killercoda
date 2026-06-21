@@ -1,10 +1,10 @@
-## 🎓 Parte 7: Reto Final - Múltiples Entornos (Opcional)
+## 🎓 Parte 6: Reto Final - Múltiples Entornos (Opcional)
 
 ### Desafío 1: Separar Configuración por Entornos
 
 En producción, normalmente necesitas diferentes configuraciones para desarrollo, staging y producción.
 
-#### Paso 7.1: Crear Archivo Base
+#### Paso 6.1: Crear Archivo Base
 
 Crea `docker-compose.yml` (configuración base):
 
@@ -45,7 +45,7 @@ volumes:
   redis-data:
 ```{{copy}}
 
-#### Paso 7.2: Crear Override para Desarrollo
+#### Paso 6.2: Crear Override para Desarrollo
 
 Crea `docker-compose.dev.yml` (overrides para desarrollo):
 
@@ -75,7 +75,7 @@ services:
       - ./apps/frontend/src:/app/src  # Hot reload
 ```{{copy}}
 
-#### Paso 7.3: Crear Override para Producción
+#### Paso 6.3: Crear Override para Producción
 
 Crea `docker-compose.prod.yml` (overrides para producción):
 
@@ -140,7 +140,7 @@ services:
       - "80:80"
 ```{{copy}}
 
-#### Paso 7.4: Probar Configuración de Desarrollo
+#### Paso 6.4: Probar Configuración de Desarrollo
 
 ```bash
 cd ~/code
@@ -155,7 +155,7 @@ docker-compose -f docker-compose.yml -f docker-compose.dev.yml ps
 curl http://localhost:5000/health
 ```{{exec}}
 
-#### Paso 7.5: Cambiar a Configuración de Producción
+#### Paso 6.5: Cambiar a Configuración de Producción
 
 ```bash
 # Detener desarrollo
@@ -171,7 +171,7 @@ docker-compose -f docker-compose.yml -f docker-compose.prod.yml ps
 
 ### Desafío 2: Variables de Entorno con .env
 
-#### Paso 7.6: Crear Archivo .env
+#### Paso 6.6: Crear Archivo .env
 
 ```bash
 cat > ~/code/.env << 'EOF'
@@ -194,7 +194,7 @@ FRONTEND_CPU_LIMIT=0.25
 EOF
 ```{{exec}}
 
-#### Paso 7.7: Crear Compose con Variables
+#### Paso 6.7: Crear Compose con Variables
 
 Crea `docker-compose.env.yml`:
 
@@ -254,7 +254,7 @@ volumes:
   redis-data:
 ```{{copy}}
 
-#### Paso 7.8: Probar con Variables de Entorno
+#### Paso 6.8: Probar con Variables de Entorno
 
 ```bash
 # Docker Compose carga .env automáticamente
@@ -266,7 +266,7 @@ docker-compose -f docker-compose.env.yml ps
 
 ### Desafío 3: Profiles para Servicios Opcionales
 
-#### Paso 7.9: Agregar Servicios de Monitoring
+#### Paso 6.9: Agregar Servicios de Monitoring
 
 Crea `docker-compose.monitoring.yml`:
 
@@ -318,7 +318,7 @@ networks:
   backend-network:
 ```{{copy}}
 
-#### Paso 7.10: Probar Profiles
+#### Paso 6.10: Probar Profiles
 
 ```bash
 # Levantar solo servicios principales
@@ -336,7 +336,7 @@ docker-compose -f docker-compose.monitoring.yml ps
 
 ### Desafío 4: Makefile para Comandos Comunes
 
-#### Paso 7.11: Crear Makefile
+#### Paso 6.11: Crear Makefile
 
 ```bash
 cat > ~/code/Makefile << 'EOF'
@@ -377,7 +377,7 @@ status:
 EOF
 ```{{exec}}
 
-#### Paso 7.12: Usar Makefile
+#### Paso 6.12: Usar Makefile
 
 ```bash
 cd ~/code
