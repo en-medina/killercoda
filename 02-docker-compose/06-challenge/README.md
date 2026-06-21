@@ -1,5 +1,10 @@
 ## 🎓 Parte 6: Reto Final - Múltiples Entornos (Opcional)
 
+**Nota:** Antes de iniciar este reto, asegura haber detenido la aplicación anterior con el siguiente commando
+```
+docker-compose -f docker-compose.complete.yml down
+```{{exec}}
+
 ### Desafío 1: Separar Configuración por Entornos
 
 En producción, normalmente necesitas diferentes configuraciones para desarrollo, staging y producción.
@@ -102,7 +107,12 @@ services:
       redis:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      test: [
+        "CMD",
+        "python",
+        "-c",
+        "\"import urllib.request; urllib.request.urlopen('http://localhost:5000/health').read()\""
+      ]
       interval: 30s
       timeout: 3s
       retries: 3
@@ -126,7 +136,7 @@ services:
       backend:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost/"]
+      test: ["CMD", "curl", "-sf", "http://localhost:80/health"]
       interval: 30s
       timeout: 3s
       retries: 3
@@ -152,7 +162,7 @@ docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
 docker-compose -f docker-compose.yml -f docker-compose.dev.yml ps
 
 # Probar
-curl http://localhost:5000/health
+curl -s http://localhost:5000/health | jq .
 ```{{exec}}
 
 #### Paso 6.5: Cambiar a Configuración de Producción
@@ -167,9 +177,17 @@ docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 # Verificar health checks (toma más tiempo)
 sleep 20
 docker-compose -f docker-compose.yml -f docker-compose.prod.yml ps
+
+# Probar
+curl -s http://localhost:5000/health | jq .
 ```{{exec}}
 
 ### Desafío 2: Variables de Entorno con .env
+Antes de iniciar remueve todos los contenedores del paso anterior con el siguiente comando:
+```
+docker stop $(docker ps -q)
+docker rm $(docker ps -aq)
+```{{exec}}
 
 #### Paso 6.6: Crear Archivo .env
 
@@ -262,137 +280,6 @@ docker-compose -f docker-compose.env.yml up -d
 
 # Verificar que los puertos son los correctos
 docker-compose -f docker-compose.env.yml ps
-```{{exec}}
-
-### Desafío 3: Profiles para Servicios Opcionales
-
-#### Paso 6.9: Agregar Servicios de Monitoring
-
-Crea `docker-compose.monitoring.yml`:
-
-```yaml
-services:
-  # Servicios principales (sin profiles, siempre activos)
-  redis:
-    image: redis:7-alpine
-    networks:
-      - backend-network
-
-  backend:
-    build:
-      context: ./apps/backend
-      dockerfile: Dockerfile
-    networks:
-      - backend-network
-    ports:
-      - "5000:5000"
-    environment:
-      - REDIS_HOST=redis
-
-  # Servicios opcionales de monitoring
-  redis-exporter:
-    image: oliver006/redis_exporter:latest
-    networks:
-      - backend-network
-    ports:
-      - "9121:9121"
-    environment:
-      - REDIS_ADDR=redis:6379
-    profiles:
-      - monitoring
-    depends_on:
-      - redis
-
-  prometheus:
-    image: prom/prometheus:latest
-    networks:
-      - backend-network
-    ports:
-      - "9090:9090"
-    volumes:
-      - ./configs/prometheus.yml:/etc/prometheus/prometheus.yml:ro
-    profiles:
-      - monitoring
-
-networks:
-  backend-network:
-```{{copy}}
-
-#### Paso 6.10: Probar Profiles
-
-```bash
-# Levantar solo servicios principales
-docker-compose -f docker-compose.monitoring.yml up -d
-
-# Ver que solo redis y backend están corriendo
-docker-compose -f docker-compose.monitoring.yml ps
-
-# Ahora levantar con monitoring
-docker-compose -f docker-compose.monitoring.yml --profile monitoring up -d
-
-# Ver que ahora también corren redis-exporter y prometheus
-docker-compose -f docker-compose.monitoring.yml ps
-```{{exec}}
-
-### Desafío 4: Makefile para Comandos Comunes
-
-#### Paso 6.11: Crear Makefile
-
-```bash
-cat > ~/code/Makefile << 'EOF'
-.PHONY: help dev prod test clean logs status
-
-help:
-	@echo "Available commands:"
-	@echo "  make dev        - Start development environment"
-	@echo "  make prod       - Start production environment"
-	@echo "  make test       - Run test suite"
-	@echo "  make clean      - Stop and remove all containers"
-	@echo "  make logs       - Show logs"
-	@echo "  make status     - Show service status"
-
-dev:
-	docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
-	@echo "Development environment started"
-
-prod:
-	docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
-	@echo "Production environment started"
-
-test:
-	./scripts/validate-all.sh
-
-clean:
-	docker-compose -f docker-compose.yml -f docker-compose.dev.yml down -v || true
-	docker-compose -f docker-compose.yml -f docker-compose.prod.yml down -v || true
-	docker-compose down -v || true
-
-logs:
-	docker-compose logs -f
-
-status:
-	docker-compose ps
-	@echo ""
-	@docker stats --no-stream
-EOF
-```{{exec}}
-
-#### Paso 6.12: Usar Makefile
-
-```bash
-cd ~/code
-
-# Ver ayuda
-make help
-
-# Limpiar todo
-make clean
-
-# Iniciar desarrollo
-make dev
-
-# Ver estado
-make status
 ```{{exec}}
 
 ## 🏆 Desafíos Completados

@@ -84,7 +84,7 @@ docker-compose -f docker-compose.networks.yml exec frontend getent hosts redis
 
 # Intentar verificar desde backend  la IP redis (si la conoce)
 docker-compose -f docker-compose.networks.yml exec backend getent hosts redis
-```{{exec}}
+```
 
 **Nota**: La IP de redis que conoce el backend coincide con la IP asignada a redis en la red **code_backend-network**.
 

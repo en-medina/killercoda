@@ -55,11 +55,11 @@ services:
         "CMD",
         "python",
         "-c",
-        "\"import urllib.request; urllib.request.urlopen('http://localhost:5000/health').read()\""
+        "import urllib.request; urllib.request.urlopen('http://localhost:5000/health').read()"
       ]
-      interval: 30s
+      interval: 5s
       timeout: 3s
-      retries: 3
+      retries: 2
       start_period: 10s
     restart: unless-stopped
     deploy:
@@ -86,7 +86,7 @@ services:
       backend:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", -sf", "http://localhost:80/health"]
+      test: ["CMD", "curl", "-sf", "http://localhost:80/health"]
       interval: 30s
       timeout: 3s
       retries: 3
@@ -191,19 +191,6 @@ curl -sI http://localhost:5000/$SHORT_CODE  | grep Location
 - **Resource management:** Límites de CPU y memoria previenen resource starvation
 - **Auto-recovery:** Restart policies permiten recuperación automática
 - **Production-ready:** Stack lista para ambientes de producción
-
-## 📊 Comandos Útiles
-
-```bash
-# Ver health status en tiempo real
-watch -n 2 'docker-compose -f docker-compose.complete.yml ps'
-
-# Ver eventos del sistema Docker
-docker events --filter 'type=container' --filter 'event=health_status'
-
-# Forzar recreación de un servicio
-docker-compose -f docker-compose.complete.yml up -d --force-recreate backend
-```
 
 ## 🧹 Preparación para Siguiente Paso
 

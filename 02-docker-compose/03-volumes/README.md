@@ -138,7 +138,10 @@ docker-compose -f docker-compose.volumes.yml up -d
 # (si no lo guardaste, usa uno que hayas creado)
 
 # Verificar que el dato persiste después del reinicio
-curl -I http://localhost:5000/$SHORT_CODE | head -n 5
+curl -sI http://localhost:5000/$SHORT_CODE | head -n 5
+
+# Verificar que funciona
+curl -sI http://localhost:5000/$SHORT_CODE | grep Location
 
 echo ""
 echo "✅ Los datos persistieron después del reinicio!"

@@ -23,7 +23,7 @@ echo "🔴 Deteniendo Redis..."
 docker-compose -f docker-compose.complete.yml stop redis
 
 # Esperar un momento
-sleep 3
+sleep 5
 
 # Ver estado
 docker-compose -f docker-compose.complete.yml ps
@@ -38,6 +38,13 @@ curl -X POST http://localhost:5000/shorten \
   -H "Content-Type: application/json" \
   -d '{"url": "https://github.com"}' || echo "❌ Esperado: Error porque Redis está caído"
 ```{{exec}}
+
+Si revisa el estado del contenedor del backend, se puede dar cuenta que ha estado fallando los ultimos healthcheck: 
+```
+docker inspect link-backend | jq '.[0].State.Health'
+```{{exec}}
+
+
 
 #### Paso 5.4: Auto-Recuperación de Redis
 
@@ -186,12 +193,3 @@ docker inspect link-frontend --format='{{range .State.Health.Log}}{{.Start}}: {{
 2. **Health checks no son opcionales:** Detectan problemas que "docker ps" no ve
 3. **Resource limits protegen el sistema:** Un servicio con memory leak no derriba todo
 4. **Conditional depends_on es poderoso:** Evita race conditions en el startup
-
-## 🧹 Limpieza
-
-```bash
-# Mantener la stack corriendo para el siguiente paso
-# (tests de integración)
-```
-
-En el siguiente paso, crearemos scripts de test automatizados.
