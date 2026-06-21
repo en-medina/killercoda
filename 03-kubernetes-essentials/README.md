@@ -34,20 +34,20 @@ Un sistema de orquestación de contenedores que automatiza el despliegue, escala
 
 ```
 ┌──────────────────────────────────────────────────────┐
-│                   Kubernetes Cluster                  │
-│                                                        │
-│  ┌─────────────────┐        ┌─────────────────┐     │
-│  │   Frontend      │        │    Backend      │     │
+│                   Kubernetes Cluster                 │
+│                                                      │
+│  ┌─────────────────┐        ┌─────────────────┐      │
+│  │   Frontend      │        │    Backend      │      │
 │  │   (2 replicas)  │───────▶│   (3 replicas)  │     │
-│  │   NodePort      │        │    NodePort     │     │
-│  └─────────────────┘        └─────────────────┘     │
-│                                      │                │
-│                                      ▼                │
+│  │   NodePort      │        │    NodePort     │      │
+│  └─────────────────┘        └─────────────────┘      │
+│                                      │               │
+│                                      ▼               │
 │                             ┌─────────────────┐      │
 │                             │     Redis       │      │
 │                             │   (1 replica)   │      │
 │                             │    ClusterIP    │      │
-│                             │      + PVC       │      │
+│                             │      + PVC      │      │
 │                             └─────────────────┘      │
 └──────────────────────────────────────────────────────┘
 ```
