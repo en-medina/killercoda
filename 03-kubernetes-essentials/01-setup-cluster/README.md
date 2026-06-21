@@ -72,9 +72,28 @@ docker build -t link-frontend:v1 .
 docker images | grep link-
 ```{{exec}}
 
-**Nota:** En un cluster Kubernetes real, usarías un container registry (Docker Hub, GCR, ECR). Para este lab, las imágenes están disponibles localmente.
+### Paso 1.5 Cargar las imagenes al Container Runtime Interface
+En Kubernetes, los contenedores no se ejecutan directamente desde Docker, sino desde un container runtime (en este caso normalmente containerd). Esto significa que, aunque hayas construido las imágenes con docker build, el cluster no siempre puede verlas automáticamente.
 
-### Paso 1.5: Conceptos Básicos de Kubectl
+Para que el cluster pueda usar estas imágenes locales en este laboratorio, debemos importarlas al runtime del nodo.
+
+```
+# Exportar imágenes desde Docker
+docker save link-backend:v1 -o backend.tar
+docker save link-frontend:v1 -o frontend.tar
+
+# Importarlas en containerd (Kubernetes runtime en KillerCoda)
+sudo ctr -n=k8s.io images import backend.tar
+sudo ctr -n=k8s.io images import frontend.tar
+
+# Verificar que fueron cargadas
+sudo ctr -n=k8s.io images ls | grep link
+```{{exec}}
+
+
+**Nota:** En un cluster Kubernetes real, usarías un container registry (Docker Hub, GCR, ECR). Para este lab, las imagenes estarán disponibles de manera local
+
+### Paso 1.6: Conceptos Básicos de Kubectl
 
 ```bash
 # Sintaxis general

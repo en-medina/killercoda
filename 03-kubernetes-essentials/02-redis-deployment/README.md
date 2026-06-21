@@ -22,7 +22,7 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: standard
+  storageClassName: local-path
 ```{{copy}}
 
 **Explicación:**
