@@ -1,0 +1,64 @@
+{
+  "title": "Laboratorio 3: Kubernetes Essentials",
+  "description": "Migrar aplicaciones multi-contenedor desde Docker Compose a Kubernetes",
+  "details": {
+    "intro": {
+      "text": "README.md",
+      "foreground": "00-init/foreground.sh",
+      "background": "00-init/background.sh"
+    },
+    "finish": {
+      "text": "FINISH.md"
+    },
+    "steps": [
+      {
+        "title": "Parte 1: Setup del Cluster",
+        "text": "01-setup-cluster/README.md",
+        "verify": "01-setup-cluster/verify.sh"
+      },
+      {
+        "title": "Parte 2: Desplegar Redis",
+        "text": "02-redis-deployment/README.md",
+        "verify": "02-redis-deployment/verify.sh"
+      },
+      {
+        "title": "Parte 3: Desplegar Backend",
+        "text": "03-backend-deployment/README.md",
+        "verify": "03-backend-deployment/verify.sh"
+      },
+      {
+        "title": "Parte 4: Desplegar Frontend",
+        "text": "04-frontend-deployment/README.md",
+        "verify": "04-frontend-deployment/verify.sh"
+      },
+      {
+        "title": "Parte 5: Probar la Aplicación",
+        "text": "05-testing/README.md",
+        "verify": "05-testing/verify.sh"
+      },
+      {
+        "title": "Parte 6: Rolling Updates",
+        "text": "06-rolling-updates/README.md",
+        "verify": "06-rolling-updates/verify.sh"
+      },
+      {
+        "title": "Parte 7: Auto-Healing",
+        "text": "07-auto-healing/README.md",
+        "verify": "07-auto-healing/verify.sh"
+      },
+      {
+        "title": "Parte 8: Escalado y HPA (Opcional)",
+        "text": "08-scaling/README.md"
+      }
+    ],
+    "assets": {
+      "host01": [
+        {"file": "apps/**/*", "target": "~/code/apps"},
+        {"file": "manifests/**/*", "target": "~/code/manifests"}
+      ]
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-1node"
+  }
+}
