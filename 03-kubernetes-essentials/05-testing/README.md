@@ -42,7 +42,7 @@ curl http://$NODE_IP:30080
 curl -I http://$NODE_IP:30080
 ```{{exec}}
 
-**Nota:** Para ver la interfaz gráfica completa, accede a la URL en tu navegador.
+**Nota:** Para ver la interfaz gráfica completa, accede desde [esta URL en el navegador]({{TRAFFIC_HOST1_30080}}) .
 
 ### Paso 5.4: Load Balancing del Backend
 

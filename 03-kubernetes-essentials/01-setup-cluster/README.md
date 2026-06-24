@@ -88,7 +88,7 @@ sudo ctr -n=k8s.io images import frontend.tar
 
 # Verificar que fueron cargadas
 sudo ctr -n=k8s.io images ls | grep link
-```{{exec}}
+```
 
 
 **Nota:** En un cluster Kubernetes real, usarías un container registry (Docker Hub, GCR, ECR). Para este lab, las imagenes estarán disponibles de manera local

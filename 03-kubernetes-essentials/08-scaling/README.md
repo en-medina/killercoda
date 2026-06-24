@@ -37,7 +37,7 @@ kubectl get deployment metrics-server -n kube-system
 ```bash
 # Crear autoscaler para backend
 kubectl autoscale deployment backend \
-  --cpu-percent=50 \
+  --cpu=300m \
   --min=2 \
   --max=10 \
   -n linkshortener
@@ -72,7 +72,7 @@ kubectl run -n linkshortener load-generator \
 
 # Observar HPA en tiempo real
 kubectl get hpa backend -n linkshortener -w
-```{{exec}}
+```
 
 En otra terminal:
 

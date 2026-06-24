@@ -119,7 +119,7 @@ kubectl get pods -n linkshortener -l app=redis
 
 # Ver logs
 kubectl logs -n linkshortener -l app=redis
-```{{exec}}
+```
 
 ### Paso 2.4: Crear Redis Service
 
@@ -159,7 +159,7 @@ kubectl get service redis -n linkshortener
 
 # Ver endpoints (IPs de pods)
 kubectl get endpoints redis -n linkshortener
-```{{exec}}
+```
 
 ### Paso 2.5: Probar Conectividad a Redis
 
@@ -175,7 +175,7 @@ kubectl exec -n linkshortener $REDIS_POD -- redis-cli ping
 # Probar comando SET/GET
 kubectl exec -n linkshortener $REDIS_POD -- redis-cli SET test "Hello Kubernetes"
 kubectl exec -n linkshortener $REDIS_POD -- redis-cli GET test
-```{{exec}}
+```
 
 ### Paso 2.6: Verificar Persistencia
 

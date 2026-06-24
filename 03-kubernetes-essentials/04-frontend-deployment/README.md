@@ -26,6 +26,9 @@ spec:
       - name: frontend
         image: link-frontend:v1
         imagePullPolicy: Never
+        env:
+        - name: VITE_BACKEND_URL
+          value: http://backend.linkshortener.svc.cluster.local:5000
         ports:
         - containerPort: 80
           name: http

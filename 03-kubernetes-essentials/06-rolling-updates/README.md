@@ -32,7 +32,16 @@ docker build -t link-backend:v2 .
 
 # Verificar nueva imagen
 docker images | grep link-backend
-```{{exec}}
+
+# Exportar imágenes desde Docker
+docker save link-backend:v2 -o backend2.tar
+
+# Importarlas en containerd (Kubernetes runtime en KillerCoda)
+sudo ctr -n=k8s.io images import backend2.tar
+
+# Verificar que fueron cargadas
+sudo ctr -n=k8s.io images ls | grep link
+```
 
 ### Paso 6.4: Actualizar el Deployment
 
@@ -48,7 +57,7 @@ kubectl set image deployment/backend \
 
 # Monitorear el rollout en tiempo real
 kubectl rollout status deployment/backend -n linkshortener
-```{{exec}}
+```
 
 **Observa:** Kubernetes reemplaza pods uno por uno, manteniendo la disponibilidad.
 
@@ -79,7 +88,7 @@ kubectl get pods -n linkshortener -l app=backend -o jsonpath='{range .items[*]}{
 
 # Ver detalles del deployment
 kubectl describe deployment backend -n linkshortener | grep Image
-```{{exec}}
+```
 
 ### Paso 6.7: Rollback a Versión Anterior
 
@@ -94,13 +103,16 @@ kubectl rollout status deployment/backend -n linkshortener
 
 # Verificar versión
 kubectl get pods -n linkshortener -l app=backend -o jsonpath='{.items[0].spec.containers[0].image}'
-```{{exec}}
+```
 
 ### Paso 6.8: Rollback a Revisión Específica
 
 ```bash
 # Ver historial detallado
 kubectl rollout history deployment/backend -n linkshortener
+
+echo "Espera 3 segundos..."
+sleep 3
 
 # Ver detalles de una revisión específica
 kubectl rollout history deployment/backend -n linkshortener --revision=1

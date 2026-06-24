@@ -142,7 +142,7 @@ kubectl get pods -n linkshortener -l app=backend
 
 # Ver logs de un pod
 kubectl logs -n linkshortener -l app=backend --tail=20
-```{{exec}}
+```
 
 ### Paso 3.4: Verificar Variables de Entorno
 
