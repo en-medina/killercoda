@@ -33,7 +33,8 @@ EOF
 
 Crea `docker-compose.volumes.yml`:
 
-```yaml
+```bash
+cat << 'EOF' > ~/code/docker-compose.volumes.yml
 services:
   redis:
     image: redis:7-alpine
@@ -84,7 +85,8 @@ networks:
 volumes:
   redis-data:
     driver: local
-```{{copy}}
+EOF
+```{{exec}}
 
 **Novedades:**
 - `redis-data:/data` - Volumen named para persistencia

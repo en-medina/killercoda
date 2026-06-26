@@ -12,7 +12,8 @@ Los health checks permiten:
 
 En el directorio `~/code`. Crea `docker-compose.complete.yml`:
 
-```yaml
+```bash
+cat << 'EOF' > ~/code/docker-compose.complete.yml
 services:
   redis:
     image: redis:7-alpine
@@ -107,7 +108,8 @@ networks:
 volumes:
   redis-data:
     driver: local
-```{{copy}}
+EOF
+```{{exec}}
 
 **Características Production-Ready:**
 - **Health checks:** Cada servicio tiene verificación de salud

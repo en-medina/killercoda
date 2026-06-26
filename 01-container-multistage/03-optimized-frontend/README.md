@@ -62,7 +62,7 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
 # Nginx se ejecuta en foreground por defecto
 CMD ["nginx", "-g", "daemon off;"]
 EOF
-```{{copy}}
+```{{exec}}
 
 ### Paso 3.3: Crear .dockerignore
 

@@ -13,7 +13,8 @@ En producción, normalmente necesitas diferentes configuraciones para desarrollo
 
 Crea `docker-compose.yml` (configuración base):
 
-```yaml
+```bash
+cat << 'EOF' > ~/code/docker-compose.yml
 services:
   redis:
     image: redis:7-alpine
@@ -48,13 +49,15 @@ networks:
 
 volumes:
   redis-data:
-```{{copy}}
+EOF
+```{{exec}}
 
 #### Paso 6.2: Crear Override para Desarrollo
 
 Crea `docker-compose.dev.yml` (overrides para desarrollo):
 
-```yaml
+```bash
+cat << 'EOF' > ~/code/docker-compose.dev.yml
 services:
   redis:
     ports:
@@ -78,13 +81,15 @@ services:
       - ./apps/frontend/.env
     volumes:
       - ./apps/frontend/src:/app/src  # Hot reload
-```{{copy}}
+EOF
+```{{exec}}
 
 #### Paso 6.3: Crear Override para Producción
 
 Crea `docker-compose.prod.yml` (overrides para producción):
 
-```yaml
+```bash
+cat << 'EOF' > ~/code/docker-compose.prod.yml
 services:
   redis:
     restart: always
@@ -148,7 +153,8 @@ services:
           memory: 128M
     ports:
       - "80:80"
-```{{copy}}
+EOF
+```{{exec}}
 
 #### Paso 6.4: Probar Configuración de Desarrollo
 
@@ -216,7 +222,8 @@ EOF
 
 Crea `docker-compose.env.yml`:
 
-```yaml
+```bash
+cat << 'EOF' > ~/code/docker-compose.env.yml
 services:
   redis:
     image: redis:7-alpine
@@ -270,7 +277,8 @@ networks:
 
 volumes:
   redis-data:
-```{{copy}}
+EOF
+```{{exec}}
 
 #### Paso 6.8: Probar con Variables de Entorno
 

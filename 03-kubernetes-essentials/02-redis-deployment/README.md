@@ -10,7 +10,8 @@ En Kubernetes, los datos en Pods son efímeros por defecto. Para persistencia, u
 
 Crea `~/code/manifests/02-redis-pvc.yaml`:
 
-```yaml
+```bash
+cat << 'EOF' > ~/code/manifests/02-redis-pvc.yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -23,7 +24,8 @@ spec:
     requests:
       storage: 1Gi
   storageClassName: local-path
-```{{copy}}
+EOF
+```{{exec}}
 
 **Explicación:**
 - **ReadWriteOnce:** El volumen puede ser montado como lectura-escritura por un solo nodo
@@ -46,7 +48,8 @@ kubectl describe pvc redis-pvc -n linkshortener
 
 Crea `~/code/manifests/03-redis-deployment.yaml`:
 
-```yaml
+```bash
+cat << 'EOF' > ~/code/manifests/03-redis-deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -98,7 +101,8 @@ spec:
       - name: redis-storage
         persistentVolumeClaim:
           claimName: redis-pvc
-```{{copy}}
+EOF
+```{{exec}}
 
 **Explicación:**
 - **replicas: 1:** Solo una instancia de Redis (stateful, no necesitamos múltiples réplicas aquí)
@@ -127,7 +131,8 @@ Los Pods tienen IPs dinámicas. Un Service proporciona un punto de acceso establ
 
 Crea `~/code/manifests/04-redis-service.yaml`:
 
-```yaml
+```bash
+cat << 'EOF' > ~/code/manifests/04-redis-service.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -141,7 +146,8 @@ spec:
   - port: 6379
     targetPort: 6379
     protocol: TCP
-```{{copy}}
+EOF
+```{{exec}}
 
 **Explicación:**
 - **type: ClusterIP:** Solo accesible dentro del cluster (no necesitamos acceso externo a Redis)

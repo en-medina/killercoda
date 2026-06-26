@@ -109,7 +109,8 @@ kubectl get hpa backend -n linkshortener -w
 
 Crear `~/code/manifests/11-backend-hpa.yaml`:
 
-```yaml
+```bash
+cat << 'EOF' > ~/code/manifests/11-backend-hpa.yaml
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
@@ -152,7 +153,8 @@ spec:
         value: 2
         periodSeconds: 30
       selectPolicy: Max
-```{{copy}}
+EOF
+```{{exec}}
 
 ```bash
 # Eliminar HPA anterior

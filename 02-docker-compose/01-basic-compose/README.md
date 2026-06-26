@@ -29,7 +29,8 @@ En este directorio, vamos a crear un archivo Docker Compose básico que orqueste
 
 Crea `docker-compose.starter.yml`:
 
-```yaml
+```bash
+cat << 'EOF' > ~/code/docker-compose.starter.yml
 services:
   redis:
     image: redis:7-alpine
@@ -55,14 +56,15 @@ services:
       - "8080:80"
     env_file:
       - ./apps/frontend/.env
-```{{copy}}
+EOF
+```{{exec}}
 
 **Nota:** Los servicios se descubren por nombre DNS. El backend puede conectarse a Redis usando `redis` como hostname.
 
 Es necesario generar el archivo `.env` con la dirección del backend que utilizará el frontend.
-```
+```bash
 echo "VITE_BACKEND_URL={{TRAFFIC_HOST1_5000}}" > ~/code/apps/frontend/.env
-```{{copy}}
+```{{exec}}
 
 ### Paso 1.3: Construir y Levantar la Stack
 

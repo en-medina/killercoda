@@ -12,7 +12,8 @@ En producción, queremos aislar servicios por capas:
 
 Dentro del directorio ~/code. Crea `docker-compose.networks.yml`:
 
-```yaml
+```bash
+cat << 'EOF' > ~/code/docker-compose.networks.yml
 services:
   redis:
     image: redis:7-alpine
@@ -51,7 +52,8 @@ networks:
     driver: bridge
   frontend-network:
     driver: bridge
-```{{copy}}
+EOF
+```{{exec}}
 
 **Nota:** El Backend está conectado a AMBAS redes, actuando como puente entre Frontend y Redis.
 

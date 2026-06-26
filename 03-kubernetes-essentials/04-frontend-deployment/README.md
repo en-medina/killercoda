@@ -4,7 +4,8 @@
 
 Crea `~/code/manifests/09-frontend-deployment.yaml`:
 
-```yaml
+```bash
+cat << 'EOF' > ~/code/manifests/09-frontend-deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -51,7 +52,8 @@ spec:
             port: 80
           initialDelaySeconds: 3
           periodSeconds: 10
-```{{copy}}
+EOF
+```{{exec}}
 
 **Diferencias con Backend:**
 - **replicas: 2:** Solo 2 réplicas (frontend es más ligero)
@@ -74,7 +76,8 @@ kubectl get pods -n linkshortener -l app=frontend
 
 Crea `~/code/manifests/10-frontend-service.yaml`:
 
-```yaml
+```bash
+cat << 'EOF' > ~/code/manifests/10-frontend-service.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -89,7 +92,8 @@ spec:
     targetPort: 80
     nodePort: 30080
     protocol: TCP
-```{{copy}}
+EOF
+```{{exec}}
 
 Aplicar:
 

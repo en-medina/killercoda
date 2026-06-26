@@ -33,7 +33,8 @@ kubectl get all
 
 Crea `~/code/manifests/01-namespace.yaml`:
 
-```yaml
+```bash
+cat << 'EOF' > ~/code/manifests/01-namespace.yaml
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -41,7 +42,8 @@ metadata:
   labels:
     app: linkshortener
     env: dev
-```{{copy}}
+EOF
+```{{exec}}
 
 Aplicar el namespace:
 

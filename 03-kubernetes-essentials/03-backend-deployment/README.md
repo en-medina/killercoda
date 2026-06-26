@@ -6,7 +6,8 @@ ConfigMaps almacenan configuración no sensible que puede ser inyectada en Pods:
 
 Crea `~/code/manifests/05-backend-configmap.yaml`:
 
-```yaml
+```bash
+cat << 'EOF' > ~/code/manifests/05-backend-configmap.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -17,7 +18,8 @@ data:
   REDIS_PORT: "6379"
   FLASK_ENV: "production"
   LOG_LEVEL: "info"
-```{{copy}}
+EOF
+```{{exec}}
 
 Aplicar:
 
@@ -37,7 +39,8 @@ Secrets son similares a ConfigMaps pero para información confidencial:
 
 Crea `~/code/manifests/06-backend-secret.yaml`:
 
-```yaml
+```bash
+cat << 'EOF' > ~/code/manifests/06-backend-secret.yaml
 apiVersion: v1
 kind: Secret
 metadata:
@@ -48,7 +51,8 @@ data:
   # base64 encoded values
   # echo -n "supersecretkey" | base64
   SECRET_KEY: c3VwZXJzZWNyZXRrZXk=
-```{{copy}}
+EOF
+```{{exec}}
 
 **Nota:** Los valores en Secrets deben estar codificados en base64.
 
@@ -68,7 +72,8 @@ kubectl describe secret backend-secret -n linkshortener
 
 Crea `~/code/manifests/07-backend-deployment.yaml`:
 
-```yaml
+```bash
+cat << 'EOF' > ~/code/manifests/07-backend-deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -121,7 +126,8 @@ spec:
             port: 5000
           initialDelaySeconds: 5
           periodSeconds: 10
-```{{copy}}
+EOF
+```{{exec}}
 
 **Características clave:**
 - **replicas: 3:** Tres instancias para alta disponibilidad
@@ -162,7 +168,8 @@ kubectl exec -n linkshortener $BACKEND_POD -- env | grep -E "REDIS_HOST|FLASK_EN
 
 Crea `~/code/manifests/08-backend-service.yaml`:
 
-```yaml
+```bash
+cat << 'EOF' > ~/code/manifests/08-backend-service.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -177,7 +184,8 @@ spec:
     targetPort: 5000
     nodePort: 30500
     protocol: TCP
-```{{copy}}
+EOF
+```{{exec}}
 
 **Explicación:**
 - **type: NodePort:** Expone el servicio externamente en un puerto del nodo
