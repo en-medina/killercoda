@@ -4,15 +4,15 @@
 
 ```bash
 cd ~/code/apps/backend
-ls -la
-# Verás: app/ requirements.txt
+ls -la # Verás: app/ requirements.txt
 ```{{exec}}
 
 ### Paso 1.2: Crear Dockerfile Básico (Sin Optimizar)
 
 Crea `Dockerfile.basic`:
 
-```dockerfile
+```bash
+cat << 'EOF' > Dockerfile.basic
 FROM python:3.11
 
 # Copiar todo el código
@@ -27,19 +27,16 @@ EXPOSE 5000
 
 # Comando de inicio
 CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:create_app()"]
-```{{copy}}
+EOF
+```{{exec}}
 
 ### Paso 1.3: Construir y Verificar Tamaño
 
 ```bash
-# Construir imagen
-docker build -f Dockerfile.basic -t link-backend:basic .
-
-# Verificar tamaño
-docker images | grep link-backend
-
-# Debería mostrar ~1 GB (muy pesado)
+docker build -f Dockerfile.basic -t link-backend:basic . # Construir imagen
+docker images | grep link-backend # Verificar tamaño
 ```
+Debería mostrar ~1 GB (muy pesado)
 
 **❌ Problemas de este enfoque:**
 - Imagen de ~1 GB

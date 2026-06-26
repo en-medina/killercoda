@@ -4,7 +4,8 @@
 
 Crea `Dockerfile.optimized`:
 
-```dockerfile
+```bash
+cat << 'EOF' > Dockerfile.optimized
 # ============================================
 # Stage 1: Builder (Instalar dependencias)
 # ============================================
@@ -54,13 +55,15 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 
 # Comando de inicio
 CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "2", "app:create_app()"]
-```{{copy}}
+EOF
+```{{exec}}
 
 ### Paso 2.2: Crear .dockerignore
 
 Crea `.dockerignore` para excluir archivos innecesarios:
 
-```
+```bash
+cat << 'EOF' > .dockerignore
 __pycache__/
 *.pyc
 *.pyo
@@ -80,21 +83,18 @@ ENV/
 README.md
 *.md
 .DS_Store
-```{{copy}}
+EOF
+```{{exec}}
 
 ### Paso 2.3: Construir y Comparar
 
 ```bash
-# Construir imagen optimizada
-docker build -f Dockerfile.optimized -t link-backend:optimized .
-
-# Comparar tamaños
-docker images | grep link-backend
-
-# Resultado esperado:
-# link-backend:basic      ~1000 MB
-# link-backend:optimized  ~180 MB
+docker build -f Dockerfile.optimized -t link-backend:optimized . # Construir imagen optimizada
+docker images | grep link-backend # Comparar tamaños
 ```
+**Resultado esperado:**
+- link-backend:basic      ~1000 MB
+- link-backend:optimized  ~180 MB
 
 **✅ Mejoras logradas:**
 - Reducción de tamaño: ~82%

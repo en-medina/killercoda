@@ -3,11 +3,8 @@
 ### Paso 4.1: Escanear Backend
 
 ```bash
-# Escanear imagen optimizada
-trivy image link-backend:optimized
-
-# Ver solo vulnerabilidades HIGH y CRITICAL
-trivy image --severity HIGH,CRITICAL link-backend:optimized
+trivy image link-backend:optimized # Escanear imagen optimizada
+trivy image --severity HIGH,CRITICAL link-backend:optimized # Ver solo vulnerabilidades HIGH y CRITICAL
 ```{{copy}}
 
 **Interpretación:**

@@ -20,8 +20,7 @@
 
 ```bash
 cd ~/code
-ls -la
-# Verás: apps/ (con backend, frontend)
+ls -la # Verás: apps/ (con backend, frontend)
 ```{{exec}}
 
 ### Paso 1.2: Crear Docker Compose Starter

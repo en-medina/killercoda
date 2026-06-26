@@ -155,11 +155,7 @@ docker inspect link-backend --format='CPU Limit: {{.HostConfig.NanoCpus}}'
 ### Paso 4.7: Ver Logs en Tiempo Real
 
 ```bash
-# Ver logs de todos los servicios
-docker-compose -f docker-compose.complete.yml logs --tail=20
-
-# Seguir logs del backend en tiempo real (Ctrl+C para salir)
-# docker-compose -f docker-compose.complete.yml logs -f backend
+docker-compose -f docker-compose.complete.yml logs --tail=20 # Ver logs de todos los servicios
 ```{{exec}}
 
 ### Paso 4.8: Probar la Aplicación Completa

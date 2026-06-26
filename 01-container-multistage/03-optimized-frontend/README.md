@@ -10,7 +10,8 @@ cd ~/code/apps/frontend
 
 Crea `Dockerfile.optimized`:
 
-```dockerfile
+```bash
+cat << 'EOF' > Dockerfile.optimized
 # ============================================
 # Stage 1: Builder (Build de React)
 # ============================================
@@ -60,13 +61,15 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
 
 # Nginx se ejecuta en foreground por defecto
 CMD ["nginx", "-g", "daemon off;"]
+EOF
 ```{{copy}}
 
 ### Paso 3.3: Crear .dockerignore
 
 Crea `.dockerignore` para excluir archivos innecesarios:
 
-```
+```bash
+cat << 'EOF' > .dockerignore
 node_modules/
 dist/
 .vite/
@@ -81,16 +84,13 @@ yarn-error.log*
 README.md
 *.md
 .DS_Store
-```{{copy}}
+EOF
+```{{exec}}
 
 ### Paso 3.4: Construir y Verificar
 
 ```bash
-# Construir
-docker build -f Dockerfile.optimized -t link-frontend:optimized .
-
-# Verificar tamaño
-docker images | grep link-frontend
-
-# Resultado esperado: ~50 MB (increíblemente pequeño)
+docker build -f Dockerfile.optimized -t link-frontend:optimized . # Construir
+docker images | grep link-frontend # Verificar tamaño
 ```
+**Resultado esperado: ~50 MB (increíblemente pequeño)**
